@@ -20,7 +20,6 @@ const opts = {
         error: '#b71c1c',
       },
     },
-    dark: true
   },
 }
 

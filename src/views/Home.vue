@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import router from '@/router/router';
+
 export default {
   propsData: {
     formErrors: false
@@ -58,7 +60,6 @@ export default {
   },
   methods: {
     onSubmit: function() {
-      const emptyRegex = /\s*/g;
       this.formErrors = false;
 
       Object.keys(this.formData).forEach((key) => {

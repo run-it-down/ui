@@ -15,7 +15,7 @@
 
       <v-list dense nav>
         <v-list-item-group v-model="selectedItem" color="primary">
-          <v-list-item v-for="item in items" :key="item.title" :link="!no_data">
+          <v-list-item v-for="item in items" :key="item.title" :link="!noData">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -32,19 +32,26 @@
 
 
 <script>
+import router from "@/router/router";
+import ApiLayer from "@/api/api";
+
 export default {
-  propsData: {
-    items: [
-      { title: "Basics", icon: "mdi-clipboard-text" },
-      { title: "Combinations", icon: "mdi-set-none" },
-      { title: "Classifications", icon: "mdi-book-variant" },
-      { title: "Average Game", icon: "mdi-equalizer-outline" },
-    ],
-    selectedItem: 0,
-    api: null,
-    noData: false
+  data() {
+    return {
+      selectedItem: 0,
+      api: null,
+      noData: false,
+    }
   },
   computed: {
+    items: function () {
+      return [
+        { title: "Basics", icon: "mdi-clipboard-text" },
+        { title: "Combinations", icon: "mdi-set-none" },
+        { title: "Classifications", icon: "mdi-book-variant" },
+        { title: "Average Game", icon: "mdi-equalizer-outline" },
+      ];
+    },
     loading: function () {
       return this.$store.state.loading;
     },
@@ -69,6 +76,7 @@ export default {
       })
       .catch((err) => {
         this.$store.dispatch("finish", {});
+        console.error(err);
       });
   },
 };
