@@ -5,17 +5,19 @@
     </v-overlay>
 
     <v-navigation-drawer permanent>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title"> Your Run Down </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <template v-slot:prepend>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title"> Your Run Down </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
 
       <v-divider></v-divider>
 
-      <v-list dense nav>
+      <v-list dense>
         <v-list-item-group v-model="selectedItem" color="primary">
-          <v-list-item v-for="item in items" :key="item.title" :link="!noData">
+          <v-list-item v-for="item in items" :key="item.title" :link="!noData" @click="navigateTo(item.title)">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -23,6 +25,18 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
+          <v-list-group v-for="complex in complexMenu" :key="complex.title" :prepend-icon="complex.icon">
+            <template v-slot:activator>
+              <v-list-item-title>{{complex.title}}</v-list-item-title>
+            </template>
+            <v-list-item v-for="item in complex.items" :key="item.title" :link="!noData" @click="navigateTo(item.title)">
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item>
+          </v-list-group>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -41,16 +55,30 @@ export default {
       selectedItem: 0,
       api: null,
       noData: false,
-    }
+    };
   },
   computed: {
     items: function () {
       return [
         { title: "Basics", icon: "mdi-clipboard-text" },
         { title: "Combinations", icon: "mdi-set-none" },
-        { title: "Classifications", icon: "mdi-book-variant" },
         { title: "Average Game", icon: "mdi-equalizer-outline" },
+        { title: "Aggression", icon: "mdi-emoticon-angry" }
       ];
+    },
+    complexMenu: function () {
+      return [{
+        title: "Classifications",
+        icon: "mdi-book-variant",
+        items: [
+          { title: "Millionaire", icon: "mdi-cash" },
+          { title: "Match Type", icon: "mdi-clipboard-text-multiple-outline" },
+          { title: "Murderous Duo", icon: "mdi-account-multiple" },
+          { title: "Duo Type", icon: "mdi-heart-outline" },
+          { title: "Farmer Type", icon: "mdi-silo" },
+          { title: "Tactician", icon: "mdi-billboard" },
+        ],
+      }];
     },
     loading: function () {
       return this.$store.state.loading;
@@ -72,13 +100,24 @@ export default {
         console.log(res.data);
         this.$store.dispatch("finish", res.data);
 
-        router.replace({ path: "/analysis/basics" });
+        router.replace({ name: "Basics" });
       })
       .catch((err) => {
         this.$store.dispatch("finish", {});
         console.error(err);
       });
   },
+  methods: {
+    navigateTo: function (name) {
+      if (name == "Basics") {
+        router.replace({ name: 'Basics' })
+      } else if (name == "Aggression") {
+        router.replace({ name: 'Aggression' })
+      } else if (name == "Average Game") {
+        router.replace({ name: 'AverageGame' })
+      }
+    }
+  }
 };
 </script>
 

@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import NashorIcon from '@/components/icons/NashorIcon.vue'
+import DragonIcon from '@/components/icons/DragonIcon.vue'
+import HeraldIcon from '@/components/icons/HeraldIcon.vue'
+
 Vue.use(Vuetify)
 
 const opts = {
@@ -21,6 +25,19 @@ const opts = {
       },
     },
   },
+  icons: {
+    values: {
+      nashor: {
+        component: NashorIcon
+      },
+      dragon: {
+        component: DragonIcon
+      },
+      herald: {
+        component: HeraldIcon
+      }
+    }
+  }
 }
 
 export default new Vuetify(opts)
