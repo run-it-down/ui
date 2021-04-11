@@ -1,29 +1,42 @@
 <template>
-  <v-container justify-items="center" fluid>
-    <v-row justify="center" align="center" class="ma-4">
-      <v-card justify="center" align="center">
-        <vertical-bar-chart :data="barData"></vertical-bar-chart>
-        <v-card-text class="subtitle-1">Aggression Breakdown for {{this.summoner}} and {{this.partner}}</v-card-text>
-      </v-card>
-    </v-row>
-    <v-row justify="center" align="center" class="ma-4">
-      <v-card justify="center" align="center">
-        <radar-chart :data="radarData" :options="radarOptions"></radar-chart>
-        <v-card-text class="subtitle-1">Aggression Breakdown for {{this.summoner}} and {{this.partner}}</v-card-text>
-      </v-card>
-    </v-row>
-  </v-container>
+  <v-layout>
+    <v-container fluid>
+      <v-row>
+        <v-col>
+          <v-card justify="center" align="center">
+            <vertical-bar-chart :data="barData"></vertical-bar-chart>
+            <v-card-text class="subtitle-1"
+              >Aggression Breakdown for {{ this.summoner }} and
+              {{ this.partner }}</v-card-text
+            >
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card justify="center" align="center">
+            <radar-chart
+              :data="radarData"
+              :options="radarOptions"
+            ></radar-chart>
+            <v-card-text class="subtitle-1"
+              >Aggression Breakdown for {{ this.summoner }} and
+              {{ this.partner }}</v-card-text
+            >
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-layout>
 </template>
 
 <script>
-import RadarChart from "@/components/Radar"
-import VerticalBarChart from "@/components/VerticalBar"
+import RadarChart from "@/components/Radar";
+import VerticalBarChart from "@/components/VerticalBar";
 
 export default {
   name: "Aggression",
   components: {
     RadarChart,
-    VerticalBarChart
+    VerticalBarChart,
   },
   computed: {
     aggression: function () {
@@ -53,10 +66,20 @@ export default {
             borderColor: "rgba(229, 88, 18, 0.6)",
             backgroundColor: "rgba(223, 111, 55, 0.5)",
             data: [
-              +(Math.round(this.aggression[this.summoner].kp + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.summoner].fw_kills + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.summoner].positioning + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.summoner].ganking + "e+4") + "e-4") * 100,
+              +(Math.round(this.aggression[this.summoner].kp + "e+4") + "e-4") *
+                100,
+              +(
+                Math.round(this.aggression[this.summoner].fw_kills + "e+4") +
+                "e-4"
+              ) * 100,
+              +(
+                Math.round(this.aggression[this.summoner].positioning + "e+4") +
+                "e-4"
+              ) * 100,
+              +(
+                Math.round(this.aggression[this.summoner].ganking + "e+4") +
+                "e-4"
+              ) * 100,
             ],
           },
           {
@@ -64,27 +87,37 @@ export default {
             borderColor: "rgba(0, 38, 38, 0.6)",
             backgroundColor: "rgba(0, 99, 99, 0.5)",
             data: [
-              +(Math.round(this.aggression[this.partner].kp + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.partner].fw_kills + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.partner].positioning + "e+4") + "e-4") * 100,
-              +(Math.round(this.aggression[this.partner].ganking + "e+4") + "e-4") * 100,
+              +(Math.round(this.aggression[this.partner].kp + "e+4") + "e-4") *
+                100,
+              +(
+                Math.round(this.aggression[this.partner].fw_kills + "e+4") +
+                "e-4"
+              ) * 100,
+              +(
+                Math.round(this.aggression[this.partner].positioning + "e+4") +
+                "e-4"
+              ) * 100,
+              +(
+                Math.round(this.aggression[this.partner].ganking + "e+4") +
+                "e-4"
+              ) * 100,
             ],
           },
         ],
       };
     },
-    radarOptions: function() {
+    radarOptions: function () {
       return {
         scale: {
           ticks: {
             beginAtZero: true,
             min: 0,
-            stepSize: 20
-          }
-        }
-      }
+            stepSize: 20,
+          },
+        },
+      };
     },
-    barData: function() {
+    barData: function () {
       return {
         labels: ["Aggression"],
         datasets: [
@@ -92,7 +125,7 @@ export default {
             label: this.summoner,
             data: [this.aggression[this.summoner].aggression],
             borderColor: "rgba(229, 88, 18, 0.6)",
-            backgroundColor: "rgba(223, 111, 55, 0.5)"
+            backgroundColor: "rgba(223, 111, 55, 0.5)",
           },
           {
             label: this.partner,
@@ -100,9 +133,9 @@ export default {
             borderColor: "rgba(0, 38, 38, 0.6)",
             backgroundColor: "rgba(0, 99, 99, 0.5)",
           },
-        ]
-      }
-    }
+        ],
+      };
+    },
   },
 };
 </script>

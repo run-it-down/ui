@@ -5,7 +5,9 @@ import Analysis from '../views/Analysis.vue'
 import Aggression from '../components/Aggression.vue'
 import AverageGame from '../components/AverageGame.vue'
 import Basics from '../components/Basics.vue'
+import DuoType from '../components/DuoType.vue'
 import Home from '../views/Home.vue'
+import MatchType from '../components/MatchType.vue'
 
 
 Vue.use(VueRouter);
@@ -42,6 +44,20 @@ const routes = [
         name: "AverageGame",
         components: {
           analysis: AverageGame
+        }
+      },
+      {
+        path: "/analysis/match-type",
+        name: "MatchType",
+        components: {
+          analysis: MatchType
+        }
+      },
+      {
+        path: "/analysis/duo-type",
+        name: "DuoType",
+        components: {
+          analysis: DuoType
         }
       },
     ]

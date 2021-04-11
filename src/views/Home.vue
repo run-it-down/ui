@@ -1,7 +1,14 @@
 <template>
   <div class="home">
+    <div>
+      <v-container fluid>
+        <v-alert type="error" v-if="this.$store.state.notFound" dismissible dense>
+          No data found for given summoners. Trigger a data collection run to be able to run it down.
+        </v-alert>
+      </v-container>
+    </div>
     <div class="content">
-      <v-form ref="form">
+      <v-form ref="form" class="form">
         <v-text-field
           ref="summoner"
           label="Your Summoner"
@@ -80,12 +87,18 @@ export default {
 .home {
   height: 100%;
   display: flex;
+  flex-flow: column;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
   justify-items: center;
 }
 
-.content {
+.form {
   width: 75%;
 }
 </style>

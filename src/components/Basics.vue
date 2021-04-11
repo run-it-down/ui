@@ -1,6 +1,16 @@
 <template>
   <v-layout>
     <v-container fluid>
+      <v-row>
+        <v-col>
+          <v-card>
+            <v-card-title>
+              Here is your run down for {{ this.summoner }} and
+              {{ this.partner }}
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
       <v-row dense>
         <!-- Column 1 -->
         <v-col>
@@ -82,7 +92,9 @@
                       <div class="subtitle-1">Average Role</div>
                     </v-col>
                     <v-col>
-                      <div class="body-1">{{ this.analysis.avg_role[this.summoner] }}</div>
+                      <div class="body-1">
+                        {{ this.analysis.avg_role[this.summoner] }}
+                      </div>
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -176,7 +188,9 @@
                       <div class="subtitle-1">Average Role</div>
                     </v-col>
                     <v-col>
-                      <div class="body-1">{{ this.analysis.avg_role[this.partner] }}</div>
+                      <div class="body-1">
+                        {{ this.analysis.avg_role[this.partner] }}
+                      </div>
                     </v-col>
                   </v-row>
                 </v-card-text>

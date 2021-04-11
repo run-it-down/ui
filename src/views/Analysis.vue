@@ -97,14 +97,12 @@ export default {
 
     response
       .then((res) => {
-        console.log(res.data);
         this.$store.dispatch("finish", res.data);
-
         router.replace({ name: "Basics" });
       })
-      .catch((err) => {
-        this.$store.dispatch("finish", {});
-        console.error(err);
+      .catch(() => {
+        this.$store.dispatch("error");
+        router.replace({ name: "Home" });
       });
   },
   methods: {
@@ -115,6 +113,10 @@ export default {
         router.replace({ name: 'Aggression' })
       } else if (name == "Average Game") {
         router.replace({ name: 'AverageGame' })
+      } else if (name == "Match Type") {
+        router.replace({ name: "MatchType" })
+      } else if (name == "Duo Type") {
+        router.replace({ name: "DuoType" })
       }
     }
   }
