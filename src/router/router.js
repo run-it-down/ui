@@ -5,9 +5,14 @@ import Analysis from '../views/Analysis.vue'
 import Aggression from '../components/Aggression.vue'
 import AverageGame from '../components/AverageGame.vue'
 import Basics from '../components/Basics.vue'
+import Combinations from '../components/Combinations.vue'
 import DuoType from '../components/DuoType.vue'
+import FarmerType from '../components/FarmerType.vue'
 import Home from '../views/Home.vue'
 import MatchType from '../components/MatchType.vue'
+import Millionaire from '../components/Millionaire.vue'
+import MurderousDuo from '../components/MurderousDuo.vue'
+import Tactician from '../components/Tactician.vue'
 
 
 Vue.use(VueRouter);
@@ -58,6 +63,41 @@ const routes = [
         name: "DuoType",
         components: {
           analysis: DuoType
+        }
+      },
+      {
+        path: "/analysis/farmer-type",
+        name: "FarmerType",
+        components: {
+          analysis: FarmerType
+        }
+      },
+      {
+        path: "/analysis/murderous-duo",
+        name: "MurderousDuo",
+        components: {
+          analysis: MurderousDuo
+        }
+      },
+      {
+        path: "/analysis/tactician",
+        name: "Tactician",
+        components: {
+          analysis: Tactician
+        }
+      },
+      {
+        path: "/analysis/millionaire",
+        name: "Millionaire",
+        components: {
+          analysis: Millionaire
+        }
+      },
+      {
+        path: "/analysis/combinations",
+        name: "Combinations",
+        components: {
+          analysis: Combinations
         }
       },
     ]

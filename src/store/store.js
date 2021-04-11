@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     "loading": false,
     "notFound": false,
+    "crawled": false,
     "summoner": "",
     "partner": "",
     "analysis": {}
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     notFound (state, payload) {
       state.notFound = payload;
+    },
+    setCrawled (state, payload) {
+      state.crawled = payload;
     }
   },
   actions: {
@@ -41,6 +45,12 @@ export default new Vuex.Store({
     error(context) {
       context.commit("setLoading", false);
       context.commit("notFound", true);
+    },
+    triggered(context) {
+      context.commit("setCrawled", true);
+    },
+    untriggered(context) {
+      context.commit("setCrawled", false);
     }
   },
   modules: {}

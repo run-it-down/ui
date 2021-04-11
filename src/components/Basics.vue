@@ -8,6 +8,51 @@
               Here is your run down for {{ this.summoner }} and
               {{ this.partner }}
             </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" persistent max-width="750px">
+                <template v-slot:activator="{ attrs }">
+                  <v-btn color="primary" v-bind="attrs" @click="openDialog">
+                    Collect Data!
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="headline"> Collect data? </v-card-title>
+                  <v-card-text>
+                    <v-row>
+                      <v-col>
+                        Data Collection currently requires your Riot Games API
+                        Key. <br />
+                        Please keep in mind, that the collection process can
+                        take a while dependent on number of games to collect.
+                        <br />
+                        Are you sure you want to continue?
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-text-field
+                          ref="token"
+                          label="Your Riot Games API-Token"
+                          required
+                          v-model="token"
+                          :rules="[() => !!token || 'This field is required']"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red darken-1" text @click="dialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn color="green darken-1" text @click="crawlData">
+                      Continue
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -249,12 +294,18 @@
 </template>
 
 <script>
-import PieChart from "@/components/Pie";
+import PieChart from "@/components/Pie"
+import ApiLayer from "@/api/api"
 
 export default {
   name: "Basics",
   components: {
     PieChart,
+  },
+  data() {
+    return {
+      dialog: false
+    }
   },
   computed: {
     analysis: {
@@ -317,6 +368,23 @@ export default {
 
         return `${minutes} min ${seconds} s`;
       },
+    },
+  },
+  methods: {
+    crawlData: function () {
+      let api = new ApiLayer();
+      if (this.token) {
+        const response = api.crawlData(this.token, this.summoner, this.partner);
+        response.then(() => {
+          this.dialog = false;
+          this.$store.dispatch("triggered");
+        });
+      } else {
+        this.$refs.token.validate();
+      }
+    },
+    openDialog: function () {
+      this.dialog = true;
     },
   },
 };

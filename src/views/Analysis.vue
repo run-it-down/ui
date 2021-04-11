@@ -97,6 +97,7 @@ export default {
 
     response
       .then((res) => {
+        console.log(res.data)
         this.$store.dispatch("finish", res.data);
         router.replace({ name: "Basics" });
       })
@@ -117,6 +118,16 @@ export default {
         router.replace({ name: "MatchType" })
       } else if (name == "Duo Type") {
         router.replace({ name: "DuoType" })
+      } else if (name == "Farmer Type") {
+        router.replace({ name: "FarmerType" })
+      } else if (name == "Murderous Duo") {
+        router.replace({ name: "MurderousDuo" })
+      } else if (name == "Tactician") {
+        router.replace({ name: "Tactician" })
+      } else if (name == "Millionaire") {
+        router.replace({ name: "Millionaire" })
+      } else if (name == "Combinations") {
+        router.replace({ name: "Combinations" })
       }
     }
   }
