@@ -1,1 +1,60 @@
-foo
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ui
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: zkdev
+          password: ${{ secrets.ZKDEV_PACKAGE_ACTIONS }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: |
+            ghcr.io/run-it-down/ui:latest
+          push: true
+          # used to fetch repository
+          secrets: |
+            GIT_AUTH_TOKEN=${{ github.token }}
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BARD }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          script: |
+            sudo docker login https://ghcr.io -u zkdev --password ${{ secrets.ZKDEV_PACKAGE_ACTIONS }}
+            sudo docker stop run-it-down-ui
+            sudo docker rm run-it-down-ui
+            sudo docker pull ghcr.io/run-it-down/ui:latest
+            sudo docker run -dit --name run-it-down-ui --net host ghcr.io/run-it-down/ui:latest
