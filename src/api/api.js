@@ -22,13 +22,10 @@ class ApiLayer {
     const response = axios.get(BASE_URL + ANALYZE_PATH + "?" + pathVariables.join("&"), config);
     return response;
   }
-  crawlData (token, summoner, partner) {
+  crawlData (summoner, partner) {
     console.log("Collect data...")
     const config = {
       httpsAgent: agent,
-      headers: {
-        "X-RIOT-TOKEN": token
-      }
     }
     const response = axios.post(BASE_URL + CRAWL_PATH, {
       "summonerName": summoner,

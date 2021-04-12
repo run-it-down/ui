@@ -21,23 +21,10 @@
                   <v-card-text>
                     <v-row>
                       <v-col>
-                        Data Collection currently requires your Riot Games API
-                        Key. <br />
                         Please keep in mind, that the collection process can
                         take a while dependent on number of games to collect.
                         <br />
                         Are you sure you want to continue?
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col>
-                        <v-text-field
-                          ref="token"
-                          label="Your Riot Games API-Token"
-                          required
-                          v-model="token"
-                          :rules="[() => !!token || 'This field is required']"
-                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-card-text>
@@ -373,15 +360,11 @@ export default {
   methods: {
     crawlData: function () {
       let api = new ApiLayer();
-      if (this.token) {
-        const response = api.crawlData(this.token, this.summoner, this.partner);
-        response.then(() => {
-          this.dialog = false;
-          this.$store.dispatch("triggered");
-        });
-      } else {
-        this.$refs.token.validate();
-      }
+      const response = api.crawlData(this.summoner, this.partner);
+      response.then(() => {
+        this.dialog = false;
+        this.$store.dispatch("triggered");
+      });
     },
     openDialog: function () {
       this.dialog = true;
